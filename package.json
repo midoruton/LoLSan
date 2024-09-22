@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "tauri": "tauri"
+    "tauri": "tauri",
+    "lint": "eslint ."
   },
   "dependencies": {
     "@chakra-ui/react": "^2.8.2",
@@ -22,7 +23,13 @@
     "@tauri-apps/cli": "^1",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
+    "@typescript-eslint/eslint-plugin": "5",
+    "@typescript-eslint/parser": "5",
     "@vitejs/plugin-react": "^4.2.1",
+    "eslint": "8",
+    "eslint-config-airbnb-base": "15",
+    "eslint-config-airbnb-typescript": "17",
+    "eslint-plugin-import": "2",
     "typescript": "^5.2.2",
     "vite": "^5.3.1"
   }
