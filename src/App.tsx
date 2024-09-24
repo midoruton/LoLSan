@@ -34,7 +34,6 @@ const theme = extendTheme({
         textRendering: "optimizeLegibility",
         fontSynthesis: "none",
         WebkitTextSizeAdjust: "100%",
-        
       },
     },
   },
@@ -47,9 +46,16 @@ function Contents() {
   async function greet() {
     // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
     console.log("greet", { name });
-    setGreetMsg(await invoke("greet", { name }));
+    await invoke("greet")
+      .then((msg: unknown) => {
+        setGreetMsg(msg as string);
+      })
+      .catch((e) => {
+        console.error(e);
+        setGreetMsg("Error: " + e);
+      });
   }
-
+  
   return (
     <Box className="container" p={4}>
       <Heading textAlign="center">Welcome to Tauri!</Heading>
@@ -111,7 +117,7 @@ function Contents() {
             justifyContent={"center"}
             textAlign={"center"}
           >
-            <FormLabel >
+            <FormLabel>
               Click on the Tauri, Vite, and React logos to learn more.
             </FormLabel>
             <Input
