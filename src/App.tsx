@@ -1,6 +1,8 @@
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import { invoke } from "@tauri-apps/api/tauri";
+import { open } from "@tauri-apps/api/dialog";
+import { appConfigDir } from "@tauri-apps/api/path";
 //import "./App.css";
 import {
   ChakraProvider,
@@ -45,7 +47,6 @@ function Contents() {
 
   async function greet() {
     // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-    console.log("greet", { name });
     await invoke("greet")
       .then((msg: unknown) => {
         setGreetMsg(msg as string);
@@ -55,7 +56,36 @@ function Contents() {
         setGreetMsg("Error: " + e);
       });
   }
-  
+
+  async function create_lol_champions_obsidian_file() {
+    await invoke("create_lol_champions_obsidian_file", {
+      championName: "Aatrox",
+    }).catch((e) => {
+      console.error(e);
+      setGreetMsg("Error: " + e);
+    });
+  }
+
+  async function set_obsidian_vault_path() {
+    const appConfigDirPath = await appConfigDir();
+    console.log(appConfigDirPath);
+    const selected = await open({
+      directory: true,
+      multiple: false,
+      defaultPath: appConfigDirPath,
+    });
+    if (selected === null) {
+      // user cancelled the selection
+    } else if (typeof selected === "string") {
+      console.log(selected);
+      await invoke("set_obsidian_vault_path", {
+        vaultPath: selected,
+      }).catch((e) => {
+        console.error(e);
+      });
+      // user selected a single directory
+    }
+  }
   return (
     <Box className="container" p={4}>
       <Heading textAlign="center">Welcome to Tauri!</Heading>
@@ -101,6 +131,22 @@ function Contents() {
           />
         </Link>
       </Flex>
+      <Button onClick={set_obsidian_vault_path}>Dialog</Button>
+      <Button
+        borderRadius="8px"
+        border="1px"
+        padding="0.6em 1.2em"
+        fontSize="1em"
+        fontWeight={500}
+        fontFamily="inherit"
+        color="#0f0f0f"
+        backgroundColor="#ffffff"
+        transition="border-color 0.25s"
+        boxShadow="0 2px 2px rgba(0, 0, 0, 0.2"
+        onClick={create_lol_champions_obsidian_file}
+      >
+        Greet
+      </Button>
       <form
         onSubmit={(e) => {
           console.log("submit", { name });
