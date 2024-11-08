@@ -11,13 +11,14 @@ edition = "2021"
 tauri-build = { version = "1", features = [] }
 
 [dependencies]
-tauri = { version = "1", features = [ "os-all", "fs-all", "path-all", "dialog-all", "shell-open"] }
+tauri = { version = "1", features = [ "os-all", "fs-all", "path-all", "dialog-all", "shell-open", "test"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 reqwest = "0.12.7"
-thiserror = "1.0.64"
+thiserror = "2.0.0"
 open = "5.3.0"
 tauri-plugin-store = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
+anyhow = "1.0.93"
 
 [features]
 # This feature is used for production builds or when a dev server is not specified, DO NOT REMOVE!!
