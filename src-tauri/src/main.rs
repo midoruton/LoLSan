@@ -4,11 +4,8 @@ mod app;
 mod types;
 use anyhow::Context;
 use app::cmd::{create_lol_champions_obsidian_file, greet, set_obsidian_vault_path};
-use types::state::AppState;
-use std::sync::Mutex;
 use tauri::Manager;
-use tauri_plugin_store::StoreBuilder;
-use tauri_plugin_log::{Target,TargetKind};
+use tauri_plugin_store::{StoreBuilder, StoreExt};
 
 
 fn main() -> anyhow::Result<()> {
@@ -19,6 +16,7 @@ fn main() -> anyhow::Result<()> {
             set_obsidian_vault_path
         ])
         .plugin(tauri_plugin_log::Builder::default().build())
+        .plugin(tauri_plugin_store::Builder::new().build())
         .setup(|app| {
             let config_path = app
                 .handle()
@@ -26,9 +24,10 @@ fn main() -> anyhow::Result<()> {
                 .app_config_dir()
                 .with_context(|| format!("Failed to load app config dir."))?
                 .join("store.bin");
-            StoreBuilder::new(app.handle(), config_path).build()?;
+            app.store(config_path.into_os_string().into_string().unwrap());
             Ok(())
         })
-        .run(tauri::generate_context!())?;
+        .run(tauri::generate_context!())
+        .expect("error while running tauri application");
     Ok(())
 }
