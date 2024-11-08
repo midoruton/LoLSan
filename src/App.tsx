@@ -6,22 +6,18 @@ import { appConfigDir } from "@tauri-apps/api/path";
 import {
   ChakraProvider,
   Heading,
-  FormControl,
-  Input,
   Button,
   Text,
-  FormLabel,
   Box,
   Flex,
   Image,
   Link,
 } from "@chakra-ui/react";
-import "./Config.tsx";
+import {theme} from "./Config.tsx";
 
 
 function Contents() {
   const [greetMsg, setGreetMsg] = useState("");
-  const [name, setName] = useState("");
 
 
   async function create_lol_champions_obsidian_file() {
