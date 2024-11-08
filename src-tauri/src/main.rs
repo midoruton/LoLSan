@@ -8,8 +8,7 @@ use types::state::AppState;
 use std::sync::Mutex;
 use tauri::Manager;
 use tauri_plugin_store::StoreBuilder;
-
-
+use tauri_plugin_log::{Target,TargetKind};
 
 
 fn main() -> anyhow::Result<()> {
@@ -19,16 +18,15 @@ fn main() -> anyhow::Result<()> {
             create_lol_champions_obsidian_file,
             set_obsidian_vault_path
         ])
+        .plugin(tauri_plugin_log::Builder::default().build())
         .setup(|app| {
             let config_path = app
                 .handle()
-                .path_resolver()
+                .path()
                 .app_config_dir()
                 .with_context(|| format!("Failed to load app config dir."))?
                 .join("store.bin");
-            app.manage(Mutex::new(AppState {
-                store: StoreBuilder::new(app.handle(), config_path).build(),
-            }));
+            StoreBuilder::new(app.handle(), config_path).build()?;
             Ok(())
         })
         .run(tauri::generate_context!())?;

@@ -1,46 +1,25 @@
 {
+  "identifier": "lolsan",
+  "productName": "tauri-app",
+  "version": "0.1.0",
   "build": {
     "beforeDevCommand": "yarn.cmd dev",
     "beforeBuildCommand": "yarn.cmd build",
-    "devPath": "http://localhost:1420",
-    "distDir": "../dist"
+    "devUrl": "http://localhost:1420",
+    "frontendDist": "../dist"
   },
-  "package": {
-    "productName": "tauri-app",
-    "version": "0.1.0"
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
   },
-  "tauri": {
-    "allowlist": {
-      "all": false,
-      "os": {
-        "all": true
-      },
-      "fs": {
-        "all": true, 
-        "readFile": true,
-        "writeFile": true,
-        "readDir": true,
-        "copyFile": true,
-        "createDir": true,
-        "removeDir": true,
-        "removeFile": true,
-        "renameFile": true,
-        "exists": true
-      },
-      "path":{
-        "all": true
-      },
-      "dialog": {
-        "all": true,
-        "open": true,
-        "save": true
-      },
-      "shell": {
-        "all": false,
-        "open": true
-      }
-      
-    },
+  "app": {
     "windows": [
       {
         "title": "tauri-app",
@@ -50,18 +29,6 @@
     ],
     "security": {
       "csp": null
-    },
-    "bundle": {
-      "active": true,
-      "targets": "all",
-      "identifier": "lolsan",
-      "icon": [
-        "icons/32x32.png",
-        "icons/128x128.png",
-        "icons/128x128@2x.png",
-        "icons/icon.icns",
-        "icons/icon.ico"
-      ]
     }
   }
 }
