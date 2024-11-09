@@ -15,7 +15,6 @@ pub fn set_obsidian_vault_path(
 where
     Result<(), TauriError>: Serialize,
 {
-    
     let store = &mut state.lock()?.store;
     store.set("vault_path", vault_path);
     store.save()?;

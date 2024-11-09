@@ -2,6 +2,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 mod app;
 mod types;
+mod util;
 use anyhow::Context;
 use app::cmd::{create_lol_champions_obsidian_file, greet, set_obsidian_vault_path};
 use tauri::Manager;
@@ -18,13 +19,7 @@ fn main() -> anyhow::Result<()> {
         .plugin(tauri_plugin_log::Builder::default().build())
         .plugin(tauri_plugin_store::Builder::new().build())
         .setup(|app| {
-            let config_path = app
-                .handle()
-                .path()
-                .app_config_dir()
-                .with_context(|| format!("Failed to load app config dir."))?
-                .join("store.bin");
-            app.store(config_path.into_os_string().into_string().unwrap());
+            util::get_app_store(app);
             Ok(())
         })
         .run(tauri::generate_context!())
