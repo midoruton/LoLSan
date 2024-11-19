@@ -1,0 +1,578 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "GameData": {
+            "properties": {
+                "gameMode": {
+                    "type": "string"
+                },
+                "gameTime": {
+                    "type": "number"
+                },
+                "mapName": {
+                    "type": "string"
+                },
+                "mapNumber": {
+                    "type": "number"
+                },
+                "mapTerrain": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "gameMode",
+                "gameTime",
+                "mapName",
+                "mapNumber",
+                "mapTerrain"
+            ],
+            "type": "object"
+        },
+        "GameEvent": {
+            "properties": {
+                "EventID": {
+                    "type": "number"
+                },
+                "EventName": {
+                    "type": "string"
+                },
+                "EventTime": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "EventID",
+                "EventName",
+                "EventTime"
+            ],
+            "type": "object"
+        },
+        "GameState": {
+            "properties": {
+                "allPlayers": {
+                    "items": {
+                        "properties": {
+                            "championName": {
+                                "type": "string"
+                            },
+                            "isBot": {
+                                "type": "boolean"
+                            },
+                            "isDead": {
+                                "type": "boolean"
+                            },
+                            "items": {
+                                "items": {},
+                                "type": "array"
+                            },
+                            "level": {
+                                "type": "number"
+                            },
+                            "position": {
+                                "type": "string"
+                            },
+                            "rawChampionName": {
+                                "type": "string"
+                            },
+                            "rawSkinName": {
+                                "type": "string"
+                            },
+                            "respawnTimer": {
+                                "type": "number"
+                            },
+                            "riotId": {
+                                "type": "string"
+                            },
+                            "riotIdGameName": {
+                                "type": "string"
+                            },
+                            "riotIdTagLine": {
+                                "type": "string"
+                            },
+                            "runes": {
+                                "properties": {
+                                    "keystone": {
+                                        "properties": {
+                                            "displayName": {
+                                                "type": "string"
+                                            },
+                                            "id": {
+                                                "type": "number"
+                                            },
+                                            "rawDescription": {
+                                                "type": "string"
+                                            },
+                                            "rawDisplayName": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": [
+                                            "displayName",
+                                            "id",
+                                            "rawDescription",
+                                            "rawDisplayName"
+                                        ],
+                                        "type": "object"
+                                    },
+                                    "primaryRuneTree": {
+                                        "properties": {
+                                            "displayName": {
+                                                "type": "string"
+                                            },
+                                            "id": {
+                                                "type": "number"
+                                            },
+                                            "rawDescription": {
+                                                "type": "string"
+                                            },
+                                            "rawDisplayName": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": [
+                                            "displayName",
+                                            "id",
+                                            "rawDescription",
+                                            "rawDisplayName"
+                                        ],
+                                        "type": "object"
+                                    },
+                                    "secondaryRuneTree": {
+                                        "properties": {
+                                            "displayName": {
+                                                "type": "string"
+                                            },
+                                            "id": {
+                                                "type": "number"
+                                            },
+                                            "rawDescription": {
+                                                "type": "string"
+                                            },
+                                            "rawDisplayName": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": [
+                                            "displayName",
+                                            "id",
+                                            "rawDescription",
+                                            "rawDisplayName"
+                                        ],
+                                        "type": "object"
+                                    }
+                                },
+                                "required": [
+                                    "keystone",
+                                    "primaryRuneTree",
+                                    "secondaryRuneTree"
+                                ],
+                                "type": "object"
+                            },
+                            "scores": {
+                                "properties": {
+                                    "assists": {
+                                        "type": "number"
+                                    },
+                                    "creepScore": {
+                                        "type": "number"
+                                    },
+                                    "deaths": {
+                                        "type": "number"
+                                    },
+                                    "kills": {
+                                        "type": "number"
+                                    },
+                                    "wardScore": {
+                                        "type": "number"
+                                    }
+                                },
+                                "required": [
+                                    "assists",
+                                    "creepScore",
+                                    "deaths",
+                                    "kills",
+                                    "wardScore"
+                                ],
+                                "type": "object"
+                            },
+                            "skinID": {
+                                "type": "number"
+                            },
+                            "skinName": {
+                                "type": "string"
+                            },
+                            "summonerName": {
+                                "type": "string"
+                            },
+                            "summonerSpells": {
+                                "properties": {
+                                    "summonerSpellOne": {
+                                        "properties": {
+                                            "displayName": {
+                                                "type": "string"
+                                            },
+                                            "rawDescription": {
+                                                "type": "string"
+                                            },
+                                            "rawDisplayName": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": [
+                                            "displayName",
+                                            "rawDescription",
+                                            "rawDisplayName"
+                                        ],
+                                        "type": "object"
+                                    },
+                                    "summonerSpellTwo": {
+                                        "properties": {
+                                            "displayName": {
+                                                "type": "string"
+                                            },
+                                            "rawDescription": {
+                                                "type": "string"
+                                            },
+                                            "rawDisplayName": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": [
+                                            "displayName",
+                                            "rawDescription",
+                                            "rawDisplayName"
+                                        ],
+                                        "type": "object"
+                                    }
+                                },
+                                "required": [
+                                    "summonerSpellOne",
+                                    "summonerSpellTwo"
+                                ],
+                                "type": "object"
+                            },
+                            "team": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "championName",
+                            "isBot",
+                            "isDead",
+                            "items",
+                            "level",
+                            "position",
+                            "rawChampionName",
+                            "rawSkinName",
+                            "respawnTimer",
+                            "riotId",
+                            "riotIdGameName",
+                            "riotIdTagLine",
+                            "runes",
+                            "scores",
+                            "skinID",
+                            "skinName",
+                            "summonerName",
+                            "summonerSpells",
+                            "team"
+                        ],
+                        "type": "object"
+                    },
+                    "type": "array"
+                },
+                "events": {
+                    "properties": {
+                        "Events": {
+                            "items": {
+                                "properties": {
+                                    "EventID": {
+                                        "type": "number"
+                                    },
+                                    "EventName": {
+                                        "type": "string"
+                                    },
+                                    "EventTime": {
+                                        "type": "number"
+                                    }
+                                },
+                                "required": [
+                                    "EventID",
+                                    "EventName",
+                                    "EventTime"
+                                ],
+                                "type": "object"
+                            },
+                            "type": "array"
+                        }
+                    },
+                    "required": [
+                        "Events"
+                    ],
+                    "type": "object"
+                },
+                "gameData": {
+                    "properties": {
+                        "gameMode": {
+                            "type": "string"
+                        },
+                        "gameTime": {
+                            "type": "number"
+                        },
+                        "mapName": {
+                            "type": "string"
+                        },
+                        "mapNumber": {
+                            "type": "number"
+                        },
+                        "mapTerrain": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "gameMode",
+                        "gameTime",
+                        "mapName",
+                        "mapNumber",
+                        "mapTerrain"
+                    ],
+                    "type": "object"
+                }
+            },
+            "required": [
+                "allPlayers",
+                "events",
+                "gameData"
+            ],
+            "type": "object"
+        },
+        "Player": {
+            "properties": {
+                "championName": {
+                    "type": "string"
+                },
+                "isBot": {
+                    "type": "boolean"
+                },
+                "isDead": {
+                    "type": "boolean"
+                },
+                "items": {
+                    "items": {},
+                    "type": "array"
+                },
+                "level": {
+                    "type": "number"
+                },
+                "position": {
+                    "type": "string"
+                },
+                "rawChampionName": {
+                    "type": "string"
+                },
+                "rawSkinName": {
+                    "type": "string"
+                },
+                "respawnTimer": {
+                    "type": "number"
+                },
+                "riotId": {
+                    "type": "string"
+                },
+                "riotIdGameName": {
+                    "type": "string"
+                },
+                "riotIdTagLine": {
+                    "type": "string"
+                },
+                "runes": {
+                    "properties": {
+                        "keystone": {
+                            "properties": {
+                                "displayName": {
+                                    "type": "string"
+                                },
+                                "id": {
+                                    "type": "number"
+                                },
+                                "rawDescription": {
+                                    "type": "string"
+                                },
+                                "rawDisplayName": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "displayName",
+                                "id",
+                                "rawDescription",
+                                "rawDisplayName"
+                            ],
+                            "type": "object"
+                        },
+                        "primaryRuneTree": {
+                            "properties": {
+                                "displayName": {
+                                    "type": "string"
+                                },
+                                "id": {
+                                    "type": "number"
+                                },
+                                "rawDescription": {
+                                    "type": "string"
+                                },
+                                "rawDisplayName": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "displayName",
+                                "id",
+                                "rawDescription",
+                                "rawDisplayName"
+                            ],
+                            "type": "object"
+                        },
+                        "secondaryRuneTree": {
+                            "properties": {
+                                "displayName": {
+                                    "type": "string"
+                                },
+                                "id": {
+                                    "type": "number"
+                                },
+                                "rawDescription": {
+                                    "type": "string"
+                                },
+                                "rawDisplayName": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "displayName",
+                                "id",
+                                "rawDescription",
+                                "rawDisplayName"
+                            ],
+                            "type": "object"
+                        }
+                    },
+                    "required": [
+                        "keystone",
+                        "primaryRuneTree",
+                        "secondaryRuneTree"
+                    ],
+                    "type": "object"
+                },
+                "scores": {
+                    "properties": {
+                        "assists": {
+                            "type": "number"
+                        },
+                        "creepScore": {
+                            "type": "number"
+                        },
+                        "deaths": {
+                            "type": "number"
+                        },
+                        "kills": {
+                            "type": "number"
+                        },
+                        "wardScore": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "assists",
+                        "creepScore",
+                        "deaths",
+                        "kills",
+                        "wardScore"
+                    ],
+                    "type": "object"
+                },
+                "skinID": {
+                    "type": "number"
+                },
+                "skinName": {
+                    "type": "string"
+                },
+                "summonerName": {
+                    "type": "string"
+                },
+                "summonerSpells": {
+                    "properties": {
+                        "summonerSpellOne": {
+                            "properties": {
+                                "displayName": {
+                                    "type": "string"
+                                },
+                                "rawDescription": {
+                                    "type": "string"
+                                },
+                                "rawDisplayName": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "displayName",
+                                "rawDescription",
+                                "rawDisplayName"
+                            ],
+                            "type": "object"
+                        },
+                        "summonerSpellTwo": {
+                            "properties": {
+                                "displayName": {
+                                    "type": "string"
+                                },
+                                "rawDescription": {
+                                    "type": "string"
+                                },
+                                "rawDisplayName": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "displayName",
+                                "rawDescription",
+                                "rawDisplayName"
+                            ],
+                            "type": "object"
+                        }
+                    },
+                    "required": [
+                        "summonerSpellOne",
+                        "summonerSpellTwo"
+                    ],
+                    "type": "object"
+                },
+                "team": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "championName",
+                "isBot",
+                "isDead",
+                "items",
+                "level",
+                "position",
+                "rawChampionName",
+                "rawSkinName",
+                "respawnTimer",
+                "riotId",
+                "riotIdGameName",
+                "riotIdTagLine",
+                "runes",
+                "scores",
+                "skinID",
+                "skinName",
+                "summonerName",
+                "summonerSpells",
+                "team"
+            ],
+            "type": "object"
+        }
+    }
+}
+

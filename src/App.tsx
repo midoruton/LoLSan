@@ -14,14 +14,16 @@ import {
   Link,
 } from "@chakra-ui/react";
 import {theme} from "./Config.tsx";
+import Ajv from "ajv";
+import schema from "./schema.json";
 
-
+const  ajv = new  Ajv();
 function Contents() {
   const [greetMsg, setGreetMsg] = useState("");
 
-
-  async function create_lol_champions_obsidian_file() {
-    window:open("obsidian://open?vault=LeagueOfLegends");
+  async function create_lol_champions_obsidian_file(champion_name:string) {
+    ajv.compile(schema);
+    window:open(`obsidian://open?vault=LeagueOfLegends${champion_name}`);
   }
 
   async function set_obsidian_vault_path() {
