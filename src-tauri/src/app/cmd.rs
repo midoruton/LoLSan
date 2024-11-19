@@ -27,11 +27,16 @@ async fn fetch_data() -> Result<String, reqwest::Error> {
     let res = reqwest::get("https://localhost").await?;
     res.text().await
 }
+
 #[tauri::command]
-pub async fn greet() -> Result<String, TauriError>
+pub async fn get_liveclient_data ()-> Result<(String), TauriError>
 where
-    Result<String, TauriError>: Serialize, // Add this trait bound
+    Result<(), TauriError>: Serialize,
 {
-    let str = fetch_data().await?;
-    Ok(str)
+    let client = reqwest::ClientBuilder::new().danger_accept_invalid_certs(true).build()?;
+    let res = client
+        .get("https://127.0.0.1:2999/liveclientdata/allgamedata")
+        .send()
+        .await?;
+    Ok(res.text().await?)
 }

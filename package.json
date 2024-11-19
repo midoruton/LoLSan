@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "tauri": "tauri",
     "lint": "eslint .",
-    "generate:schema": "typescript-json-schema src/schema/Player.ts Player --out src/schema/Player.json" 
+    "generate:schema": "typescript-json-schema src/schema/AllGameData.ts AllGameData --out src/schema/AllGameData.json" 
   },
   "dependencies": {
     "@chakra-ui/react": "^2.8.2",

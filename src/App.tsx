@@ -15,15 +15,23 @@ import {
 } from "@chakra-ui/react";
 import {theme} from "./Config.tsx";
 import Ajv from "ajv";
-import schema from "./schema.json";
+import schema from "./schema/AllGameData.json";
 
 const  ajv = new  Ajv();
 function Contents() {
   const [greetMsg, setGreetMsg] = useState("");
 
-  async function create_lol_champions_obsidian_file(champion_name:string) {
-    ajv.compile(schema);
-    window:open(`obsidian://open?vault=LeagueOfLegends${champion_name}`);
+  async function create_lol_champions_obsidian_file() {
+    const validate = ajv.compile(schema);
+    await invoke<string>("get_liveclient_data")
+      .then((response) => {
+        console.log(JSON.parse(response));
+        console.log(validate(JSON.parse(response)));
+        console.log(ajv.errorsText(validate.errors));
+      })
+      .catch((e) => {
+        console.error(e);
+      });
   }
 
   async function set_obsidian_vault_path() {
