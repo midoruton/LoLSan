@@ -16,6 +16,7 @@
     "core:path:default",
     "core:image:default",
     "core:webview:default",
-    "dialog:default"
+    "dialog:default",
+    "log:default"
   ]
 }
