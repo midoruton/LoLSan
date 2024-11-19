@@ -21,6 +21,7 @@ tauri-plugin-store = { git = "https://github.com/tauri-apps/plugins-workspace", 
 anyhow = "1.0.93"
 log = "0.4.22"
 tauri-plugin-log = "2.0.2"
+tauri-plugin-dialog = "2"
 
 [features]
 # This feature is used for production builds or when a dev server is not specified, DO NOT REMOVE!!

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
-import { invoke } from "@tauri-apps/api/tauri";
-import { open } from "@tauri-apps/api/dialog";
+import { invoke } from "@tauri-apps/api/core";
+import { open as openDialog } from "@tauri-apps/plugin-dialog";
 import { appConfigDir } from "@tauri-apps/api/path";
 import {
   ChakraProvider,
@@ -21,18 +21,13 @@ function Contents() {
 
 
   async function create_lol_champions_obsidian_file() {
-    await invoke("create_lol_champions_obsidian_file", {
-      championName: "Aatrox",
-    }).catch((e) => {
-      console.error(e);
-      setGreetMsg("Error: " + e);
-    });
+    window:open("obsidian://open?vault=LeagueOfLegends");
   }
 
   async function set_obsidian_vault_path() {
     const appConfigDirPath = await appConfigDir();
     console.log(appConfigDirPath);
-    const selected = await open({
+    const selected = await openDialog({
       directory: true,
       multiple: false,
       defaultPath: appConfigDirPath,

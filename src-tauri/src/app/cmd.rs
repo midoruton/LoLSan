@@ -1,11 +1,10 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
+use crate::types::error::TauriError;
+use crate::types::state::AppState;
 use serde::Serialize;
 use std::sync::Mutex;
 use tauri::State;
-use crate::types::error::TauriError;
-use crate::types::state::AppState;
-
 
 #[tauri::command]
 pub fn set_obsidian_vault_path(
@@ -32,16 +31,4 @@ where
 {
     let str = fetch_data().await?;
     Ok(str)
-}
-
-#[tauri::command]
-pub async fn create_lol_champions_obsidian_file(champion_name: String) -> Result<(), TauriError>
-where
-    Result<(), TauriError>: Serialize,
-{
-    open::that(format!(
-        "obsidian://open?vault=LeagueOfLegends&name={}",
-        champion_name
-    ))?;
-    Ok(())
 }

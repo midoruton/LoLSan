@@ -1,7 +1,7 @@
-use anyhow::{Result,Context};
+use anyhow::{Context, Result};
 use std::sync::Arc;
-use tauri::{App,Manager, Runtime};
-use tauri_plugin_store::{StoreExt,Store};
+use tauri::{App, Manager, Runtime};
+use tauri_plugin_store::{Store, StoreExt};
 
 pub fn get_app_store<R>(app: &App<R>) -> Result<Arc<Store<R>>>
 where
