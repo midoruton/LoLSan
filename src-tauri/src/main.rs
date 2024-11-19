@@ -13,9 +13,10 @@ fn main() -> anyhow::Result<()> {
         .plugin(tauri_plugin_dialog::init())
         .invoke_handler(tauri::generate_handler![greet, set_obsidian_vault_path])
         .plugin(tauri_plugin_log::Builder::default().build())
-        .plugin(tauri_plugin_store::Builder::new().build())
+        .plugin(tauri_plugin_store::Builder::default().build())
         .setup(|app| {
-            util::get_app_store(app);
+            let config_path = util::path::get_config_file_path(app.handle())?;
+            let _ =  tauri_plugin_store::StoreBuilder::new(app,config_path).build()?;
             Ok(())
         })
         .run(tauri::generate_context!())

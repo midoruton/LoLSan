@@ -3,18 +3,21 @@
 use crate::types::error::TauriError;
 use crate::types::state::AppState;
 use serde::Serialize;
+use tauri_plugin_store::StoreExt;
 use std::sync::Mutex;
 use tauri::State;
-
+use tauri::AppHandle;
+use tauri::Runtime;
 #[tauri::command]
-pub fn set_obsidian_vault_path(
+pub fn set_obsidian_vault_path<R:Runtime>(
     vault_path: String,
-    state: State<'_, Mutex<AppState>>,
+    app: AppHandle<R>
 ) -> Result<(), TauriError>
 where
     Result<(), TauriError>: Serialize,
 {
-    let store = &mut state.lock()?.store;
+    let config_path = super::super::util::path::get_config_file_path(&app)?;
+    let   store   = app.store(config_path)?;
     store.set("vault_path", vault_path);
     store.save()?;
     Ok(())
