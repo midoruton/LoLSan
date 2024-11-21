@@ -13,45 +13,63 @@ import {
   Image,
   Link,
 } from "@chakra-ui/react";
-import {theme} from "./Config.tsx";
+import { theme } from "./Config.tsx";
 import Ajv from "ajv";
 import schema from "./schema/AllGameData.json";
-
-const  ajv = new  Ajv();
+import { info, error, debug } from "@tauri-apps/plugin-log";
+const ajv = new Ajv();
 function Contents() {
-  const [greetMsg, setGreetMsg] = useState("");
 
   async function create_lol_champions_obsidian_file() {
+    debug("create_lol_champions_obsidian_file");
+
+    debug(`schema:${schema}`);
     const validate = ajv.compile(schema);
+    debug(`validate:${validate}`);
     await invoke<string>("get_liveclient_data")
       .then((response) => {
-        console.log(JSON.parse(response));
-        console.log(validate(JSON.parse(response)));
-        console.log(ajv.errorsText(validate.errors));
+        if (validate(response)) {
+          info(response);
+        } else {
+          error(ajv.errorsText(validate.errors));
+        }
       })
       .catch((e) => {
-        console.error(e);
+        error("Error getting live client data");
+        error(e);
       });
+
+    debug("create_lol_champions_obsidian_file_end");
   }
 
   async function set_obsidian_vault_path() {
+    debug("set_obsidian_vault_path");
     const appConfigDirPath = await appConfigDir();
-    console.log(appConfigDirPath);
-    const selected = await openDialog({
+    debug(`appConfigDirPath:${appConfigDirPath}`);
+    const selectedObsidianVaultPath = await openDialog({
       directory: true,
       multiple: false,
       defaultPath: appConfigDirPath,
     });
-    if (selected === null) {
+    debug(`selectedObsidianVaultPath:${selectedObsidianVaultPath}`);
+    if (selectedObsidianVaultPath === null) {
       // user cancelled the selection
-    } else if (typeof selected === "string") {
-      console.log(selected);
+      info("No directory selected");
+    } else if (typeof selectedObsidianVaultPath === "string") {
+      // user selected a single directory
       await invoke("set_obsidian_vault_path", {
-        vaultPath: selected,
-      }).catch((e) => {
-        console.error(e);
+        vaultPath: selectedObsidianVaultPath,
+      })
+      .then((_) => {
+        info("Vault path set successfully");
+      })
+      .catch((e) => {
+        error("Error setting vault path");
+        error(e);
       });
       // user selected a single directory
+    }else{
+      error("Error selecting vault path");
     }
   }
   return (
@@ -115,7 +133,6 @@ function Contents() {
       >
         Greet
       </Button>
-      <Text textAlign={"center"}>{greetMsg}</Text>
     </Box>
   );
 }
