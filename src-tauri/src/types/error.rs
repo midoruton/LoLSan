@@ -1,4 +1,3 @@
-//本当はanyhow::Errorで良いのかもしれないが、独自実装してみたいので
 #[derive(Debug, thiserror::Error)]
 pub enum TauriError {
     #[error("ReqwestError: {0}")]
