@@ -1,6 +1,6 @@
 {
   "identifier": "lolsan",
-  "productName": "tauri-app",
+  "productName": "lolsan",
   "version": "0.1.0",
   "build": {
     "beforeDevCommand": "yarn.cmd dev",
@@ -22,7 +22,7 @@
   "app": {
     "windows": [
       {
-        "title": "tauri-app",
+        "title": "lolsan",
         "width": 800,
         "height": 600
       }

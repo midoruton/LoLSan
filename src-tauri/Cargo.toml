@@ -1,5 +1,5 @@
 [package]
-name = "tauri-app"
+name = "lolsan"
 version = "0.1.0"
 description = "A Tauri App"
 authors = ["you"]
@@ -22,7 +22,6 @@ anyhow = "1.0.93"
 log = "0.4.22"
 tauri-plugin-log = "2.0.2"
 tauri-plugin-dialog = "2"
-attohttpc = "0.28.0"
 
 [features]
 # This feature is used for production builds or when a dev server is not specified, DO NOT REMOVE!!
