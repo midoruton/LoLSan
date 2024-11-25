@@ -1,6 +1,6 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
-use crate::types::error::TauriError;
+use crate::types::error::LoLSanError;
 use crate::types::state::AppState;
 use serde::Serialize;
 use tauri_plugin_store::StoreExt;
@@ -12,9 +12,9 @@ use tauri::Runtime;
 pub fn set_obsidian_vault_path<R:Runtime>(
     vault_path: String,
     app: AppHandle<R>
-) -> Result<(), TauriError>
+) -> Result<(), LoLSanError>
 where
-    Result<(), TauriError>: Serialize,
+    Result<(), LoLSanError>: Serialize,
 {
     let config_path = super::super::util::path::get_config_file_path(&app)?;
     let   store   = app.store(config_path)?;
@@ -29,9 +29,9 @@ async fn fetch_data() -> Result<String, reqwest::Error> {
 }
 
 #[tauri::command]
-pub async fn get_liveclient_data ()-> Result<(String), TauriError>
+pub async fn get_liveclient_data ()-> Result<(String), LoLSanError>
 where
-    Result<(), TauriError>: Serialize,
+    LoLSanError: Serialize
 {
     let client = reqwest::ClientBuilder::new().danger_accept_invalid_certs(true).build()?;
     let res = client

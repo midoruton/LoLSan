@@ -1,8 +1,8 @@
-use anyhow::{Error, Result,bail};
 use serde_json::Value;
 use jsonschema::ErrorIterator;
 use std::fmt::{self, Debug};
 use derive_more::{derive::Error, Display, Into};
+use super::super::super::types::error::LoLSanError;
 #[derive(Error,Debug)]
 struct ValidationError {
     error : String
@@ -19,7 +19,7 @@ impl fmt::Display for ValidationError {
 
 
 
-async fn fetch_and_validate(url: &str, schema: &Value) -> Result<Value> {
+async fn fetch_and_validate(url: &str, schema: &Value) -> Result<Value,LoLSanError> {
     let response = reqwest::get(url).await?;
     let validator = jsonschema::validator_for(schema)?;
 
@@ -29,12 +29,7 @@ async fn fetch_and_validate(url: &str, schema: &Value) -> Result<Value> {
             if validator.is_valid(&body) {
                 Ok(body)
             } else {
-                //エラーに謎のイテレータが返ってくるので、とりあえずstringに変換しておく
-                let error_strings = validator
-                .iter_errors(&body)
-                .map(|e| e.to_string())
-                .fold(String::new(), |acc, e| acc + &e + "\n");
-                Err(anyhow::anyhow!("Validation error: {:?}", error_strings))
+                Err(validator.iter_errors(&body).into())
             }
         }
         Err(e) => Err(e.into()),
@@ -85,7 +80,7 @@ mod tests {
             let result = fetch_and_validate(&url, &schema).await;
 
             // The test expects an error because the schema requires a "fakeId" field which is not present in the JSON response.
-            assert!(result.is_err_and(|e| e.to_string().contains("Validation error:")));
+            assert!(matches!(result, Err(LoLSanError::JSONSchema(_))));
         }
         
         let fake_url = server.url() + "/fake";
@@ -102,7 +97,7 @@ mod tests {
             let result = fetch_and_validate(&fake_url, &schema).await;
 
             // The test expects an error because the URL is invalid.
-            assert!(!result.is_err_and(|e| e.downcast_ref::<reqwest::Error>().is_some()));
+            assert!(matches!(result, Err(LoLSanError::Reqwest(_))));
         }
         mock.assert_async().await;
     }

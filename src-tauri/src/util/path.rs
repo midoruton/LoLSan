@@ -1,10 +1,11 @@
-use anyhow::{Context, Result};
 use std::{path::PathBuf, sync::Arc};
 use tauri::{App, AppHandle, Manager, Runtime};
 use tauri_plugin_store::{Store, StoreExt};
 
+use crate::types::error::LoLSanError;
 
-pub fn get_config_file_path <R>(app: &AppHandle<R>) -> Result<PathBuf>
+
+pub fn get_config_file_path <R>(app: &AppHandle<R>) -> Result<PathBuf,LoLSanError>
 where
     R: Runtime,
 {
