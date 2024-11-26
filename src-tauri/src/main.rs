@@ -3,12 +3,12 @@
 mod app;
 mod types;
 mod util;
-use app::cmd::{get_liveclient_data,set_obsidian_vault_path};
+use app::cmd::{start_get_liveclient_data_loop,set_obsidian_vault_path};
 use tauri_plugin_log::{self, Target,TargetKind};
 fn main() -> anyhow::Result<()> {
     tauri::Builder::default()
         .plugin(tauri_plugin_dialog::init())
-        .invoke_handler(tauri::generate_handler![get_liveclient_data,set_obsidian_vault_path])
+        .invoke_handler(tauri::generate_handler![start_get_liveclient_data_loop,set_obsidian_vault_path])
         .plugin(tauri_plugin_log::Builder::new()
             .targets([
                 Target::new(TargetKind::Webview),

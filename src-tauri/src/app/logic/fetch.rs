@@ -3,37 +3,52 @@ use jsonschema::ErrorIterator;
 use std::fmt::{self, Debug};
 use derive_more::{derive::Error, Display, Into};
 use super::super::super::types::error::LoLSanError;
-#[derive(Error,Debug)]
-struct ValidationError {
-    error : String
-}
 
-impl fmt::Display for ValidationError {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{:?}", self.error)
-    }
-}
-
-
-
-
-
-
-async fn fetch_and_validate(url: &str, schema: &Value) -> Result<Value,LoLSanError> {
-    let response = reqwest::get(url).await?;
-    let validator = jsonschema::validator_for(schema)?;
-
+pub async fn fetch (url: &str,danger_accept_invalid_cert: bool) -> Result<Value,reqwest::Error> {
+    let client = reqwest::ClientBuilder::new().danger_accept_invalid_certs(danger_accept_invalid_cert).build()?;
+    let response = client.get(url).send().await?;
     match response.error_for_status() {
         Ok(response) => {
-            let body = response.json().await?;
-            if validator.is_valid(&body) {
-                Ok(body)
-            } else {
-                Err(validator.iter_errors(&body).into())
-            }
+            Ok(response.json().await?)
         }
         Err(e) => Err(e.into()),
     }
+}
+
+#[derive(Debug,thiserror::Error)]
+pub enum ValidationError {
+    #[error("JSONSchemaError: {0}")]
+    JSONSchema(String),
+}
+
+impl From<jsonschema::ValidationError<'static>> for ValidationError {
+    fn from(error: jsonschema::ValidationError) -> Self {
+        ValidationError::JSONSchema(error.to_string())
+    }
+}
+
+//エラーに謎のイテレータが返ってくるので、とりあえずstringに変換しておく
+impl From<jsonschema::ErrorIterator<'_>> for ValidationError{
+    fn from(iter_errors: jsonschema::ErrorIterator) -> Self {
+        let s = iter_errors.map(|e| e.to_string()).fold(String::new(), |acc, e| acc + &e + "\n");
+        ValidationError::JSONSchema(s)
+    }
+}
+
+pub async fn validate (schema: &Value, body: &Value) -> Result<(),ValidationError> {
+    let validator = jsonschema::validator_for(schema)?;
+    if validator.is_valid(body) {
+        Ok(())
+    } else {
+        Err(validator.iter_errors(body).into())
+    }
+}
+
+// This function fetches a JSON response from the given URL and validates it against the given JSON schema.
+async fn fetch_and_validate(url: &str,danger_accept_invalid_cert: bool, schema: &Value) -> Result<Value,LoLSanError> {
+    let responce = fetch(url,danger_accept_invalid_cert).await?;
+    validate(schema,&responce).await?;
+    Ok(responce)
 }
 
 #[cfg(test)]
@@ -63,7 +78,7 @@ mod tests {
                 },
                 "required": ["userId", "id"]
             });
-            let result = fetch_and_validate(&url, &schema).await;
+            let result = fetch_and_validate(&url,true, &schema).await;
             // The test expects a successful result because the JSON response matches the schema.
             assert!(result.is_ok_and(|v| v == serde_json::json!({"userId": 1, "id": 1})));
         }
@@ -77,10 +92,10 @@ mod tests {
                 },
                 "required": ["userId", "id", "fakeId"]
             });
-            let result = fetch_and_validate(&url, &schema).await;
+            let result = fetch_and_validate(&url, true,&schema).await;
 
             // The test expects an error because the schema requires a "fakeId" field which is not present in the JSON response.
-            assert!(matches!(result, Err(LoLSanError::JSONSchema(_))));
+            assert!(matches!(result, Err(LoLSanError::Validation(_))));
         }
         
         let fake_url = server.url() + "/fake";
@@ -94,7 +109,7 @@ mod tests {
                 },
                 "required": ["userId", "id", "fakeId"]
             });
-            let result = fetch_and_validate(&fake_url, &schema).await;
+            let result = fetch_and_validate(&fake_url, true,&schema).await;
 
             // The test expects an error because the URL is invalid.
             assert!(matches!(result, Err(LoLSanError::Reqwest(_))));

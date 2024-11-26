@@ -1,3 +1,5 @@
+use jsonschema::error;
+use crate::app::logic::fetch::ValidationError;
 
 #[derive(Debug, thiserror::Error)]
 pub enum LoLSanError {
@@ -11,8 +13,10 @@ pub enum LoLSanError {
     Poison(String),
     #[error("TauriError: {0}")]
     Tauri(#[from] tauri::Error),
-    #[error("JSONSchemaError")]
-    JSONSchema(String),
+    #[error("ValidationError: {0}")]
+    Validation(#[from] ValidationError),
+    #[error("SerdeJsonError: {0}")]
+    SerdeJson(#[from] serde_json::Error),
 }
 
 
@@ -29,20 +33,6 @@ impl serde::Serialize for LoLSanError {
 impl<T> From<std::sync::PoisonError<T>> for LoLSanError {
     fn from(_error: std::sync::PoisonError<T>) -> Self {
         LoLSanError::Poison(_error.to_string())
-    }
-}
-
-impl From<jsonschema::ValidationError<'static>> for LoLSanError {
-    fn from(error: jsonschema::ValidationError) -> Self {
-        LoLSanError::JSONSchema(error.to_string())
-    }
-}
-
-//エラーに謎のイテレータが返ってくるので、とりあえずstringに変換しておく
-impl From<jsonschema::ErrorIterator<'_>> for LoLSanError {
-    fn from(iter_errors: jsonschema::ErrorIterator) -> Self {
-        let s = iter_errors.map(|e| e.to_string()).fold(String::new(), |acc, e| acc + &e + "\n");
-        LoLSanError::JSONSchema(s)
     }
 }
 
