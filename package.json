@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "tauri": "tauri",
     "lint": "eslint .",
+    "test:rust": "cd src-tauri && cargo test",
     "generate:schema": "typescript-json-schema src/schema/AllGameData.ts AllGameData --out src/schema/AllGameData.json" 
   },
   "dependencies": {
