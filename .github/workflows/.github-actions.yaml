@@ -3,7 +3,8 @@ name: "test-on-pr"
 on:
   push:
     branches:
-      - main
+      - devel
+
 
 # This workflow will build your tauri app without uploading it anywhere.
 
@@ -13,8 +14,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - platform: "ubuntu-22.04" # for Tauri v1 you could replace this with ubuntu-20.04.
-            args: ""
           - platform: "windows-latest"
             args: ""
 
