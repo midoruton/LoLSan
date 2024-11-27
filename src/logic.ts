@@ -2,10 +2,8 @@
 
 import { info, error, debug } from "@tauri-apps/plugin-log";
 import {set_obsidian_vault_path} from "./command.ts";
-import Ajv from "ajv";
 import { open as openDialog } from "@tauri-apps/plugin-dialog";
 import { appConfigDir } from "@tauri-apps/api/path";
-const ajv = new Ajv();
 
 export async function configure_obsidian_valut_path() {
     debug("configure_obsidian_vault_path");

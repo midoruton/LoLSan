@@ -1,4 +1,3 @@
-use jsonschema::error;
 use crate::app::logic::fetch::ValidationError;
 
 #[derive(Debug, thiserror::Error)]
@@ -19,7 +18,6 @@ pub enum LoLSanError {
     SerdeJson(#[from] serde_json::Error),
 }
 
-
 // we must manually implement serde::Serialize
 impl serde::Serialize for LoLSanError {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
@@ -35,4 +33,3 @@ impl<T> From<std::sync::PoisonError<T>> for LoLSanError {
         LoLSanError::Poison(_error.to_string())
     }
 }
-

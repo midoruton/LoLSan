@@ -1,20 +1,14 @@
-import { useState } from "react";
 import reactLogo from "./assets/react.svg";
-import { open as openDialog } from "@tauri-apps/plugin-dialog";
-import { appConfigDir } from "@tauri-apps/api/path";
 import {
   ChakraProvider,
   Heading,
   Button,
-  Text,
   Box,
   Flex,
   Image,
   Link,
 } from "@chakra-ui/react";
 import { theme } from "./Config.tsx";
-import schema from "./schema/AllGameData.json";
-import { info, error, debug } from "@tauri-apps/plugin-log";
 import {configure_obsidian_valut_path} from "./logic.ts";
 import  {start_get_liveclient_data_loop} from "./command.ts";
 function Contents() {

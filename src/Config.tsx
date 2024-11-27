@@ -1,4 +1,3 @@
-import {warn,debug,trace,info,error} from "@tauri-apps/plugin-log";
 import { extendTheme } from "@chakra-ui/react";
 export const theme = extendTheme({
     styles: {

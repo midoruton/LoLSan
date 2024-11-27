@@ -3,8 +3,8 @@
   "productName": "lolsan",
   "version": "0.1.0",
   "build": {
-    "beforeDevCommand": "yarn.cmd dev",
-    "beforeBuildCommand": "yarn.cmd build",
+    "beforeDevCommand": "yarn dev",
+    "beforeBuildCommand": "yarn build",
     "devUrl": "http://localhost:1420",
     "frontendDist": "../dist"
   },
