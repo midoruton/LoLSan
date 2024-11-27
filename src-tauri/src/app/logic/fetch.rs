@@ -48,6 +48,7 @@ pub async fn validate(schema: &Value, body: &Value) -> Result<(), ValidationErro
 
 #[cfg(test)]
 mod tests {
+    use crate::types::error::LoLSanError;
     // This function fetches a JSON response from the given URL and validates it against the given JSON schema.
     async fn fetch_and_validate(
         url: &str,
