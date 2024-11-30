@@ -4,15 +4,10 @@ use crate::types::error::LoLSanError;
 use serde::Serialize;
 use tauri::AppHandle;
 use tauri::Runtime;
-use tauri::State;
 use tauri_plugin_store::StoreExt;
 use crate::app::state::AppState;
-use std::ops::Deref;
-use std::ops::DerefMut;
-use tokio::sync::Mutex;
 use std::sync::Arc;
 use super::logic::fetch::{fetch, validate};
-use super::state;
 #[tauri::command]
 pub fn set_obsidian_vault_path<R: Runtime>(
     vault_path: String,
@@ -37,35 +32,41 @@ where
 {
     log::debug!("Starting get_liveclient_data_loop_command");
     let schema = serde_json::from_str::<serde_json::Value>(ALL_GAME_DATA_SCHEMA_STR)?;
-    let test = Arc::clone(&my_state_arc.getting_liveclient_data_loop_mutex);
+    let access_mutex = Arc::clone(&my_state_arc.liveclinet_data_access_mutex);
+    //https://stackoverflow.com/questions/77154162/how-to-use-a-managed-tauri-state-variable-inside-a-spawned-tauri-async-runtime-t
     tauri::async_runtime::spawn(async move {
-        let lock = test.lock().await;
-        log::debug!("Starting get_liveclient_data_loop");
-        loop { 
-            let url = "https://127.0.0.1:2999/liveclientdata/allgamedata";
-            log::debug!("Fetching data from: {}", url);
-            let responce = match fetch(url, true).await {
-                Ok(a) => a,
-                Err(e) => {
-                    //TODO: handle error by status code
-                    log::error!("Error while fetching data: {}", e);
-                    continue;
+        let lock = access_mutex.try_lock_owned();
+        match lock {
+            None => {
+                log::warn!("get_liveclient_data_loop already running");
+            }
+            Some(_) => {
+                log::debug!("Starting get_liveclient_data_loop");
+                loop { 
+                    let url = "https://127.0.0.1:2999/liveclientdata/allgamedata";
+                    log::debug!("Fetching data from: {}", url);
+                    let responce = match fetch(url, true).await {
+                        Ok(a) => a,
+                        Err(e) => {
+                            //TODO: handle error by status code
+                            log::error!("Error while fetching data: {}", e);
+                            continue;
+                        }
+                    };
+                    log::debug!("Data fetched: {}", responce);
+                    log::debug!("Validating data with schema: {}", schema);
+                    let valid_responce = match validate(&schema, &responce).await {
+                        Ok(_) => responce,
+                        Err(e) => {
+                            log::error!("Error while validating data: {}", e);
+                            std::thread::sleep(std::time::Duration::from_secs(2));
+                            continue;
+                        }
+                    };
+                    log::info!("Data fetched and validated: {}", valid_responce);
+                    break;
                 }
-            };
-            log::debug!("Data fetched: {}", responce);
-            log::debug!("Validating data with schema: {}", schema);
-            let valid_responce = match validate(&schema, &responce).await {
-                Ok(_) => responce,
-                Err(e) => {
-                    log::error!("Error while validating data: {}", e);
-                    std::thread::sleep(std::time::Duration::from_secs(2));
-                    continue;
-                }
-            };
-            log::info!("Data fetched and validated: {}", valid_responce);
-            //ここでlockを解放したい
-            drop(lock); 
-            break;
+            }
         }
     });
     Ok(())
