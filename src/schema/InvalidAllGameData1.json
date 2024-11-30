@@ -1,0 +1,16 @@
+{
+    "activePlayer": {
+        "error": "Spectator mode doesn't currently support this feature"
+    },
+    "allPlayers": [],
+    "events": {
+        "Events": []
+    },
+    "gameData": {
+        "gameMode": "PRACTICETOOL",
+        "gameTime": 0.0,
+        "mapName": "Map11",
+        "mapNumber": 11,
+        "mapTerrain": "Default"
+    }
+}

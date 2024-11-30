@@ -10,7 +10,7 @@
     "tauri": "tauri",
     "lint": "eslint .",
     "test:rust": "cd src-tauri && cargo test",
-    "generate:schema": "typescript-json-schema src/schema/AllGameData.ts AllGameData --out src/schema/AllGameData.json" 
+    "generate:schema": "typescript-json-schema src/schema/AllGameData.ts AllGameData --out src/schema/AllGameData.json --required" 
   },
   "dependencies": {
     "@chakra-ui/react": "^2.8.2",

@@ -36,7 +36,8 @@ impl From<jsonschema::ErrorIterator<'_>> for ValidationError {
 }
 
 pub async fn validate(schema: &Value, body: &Value) -> Result<(), ValidationError> {
-    let validator = jsonschema::validator_for(schema)?;
+    let validator = jsonschema::draft7::options()
+        .build(schema)?;
     if validator.is_valid(body) {
         Ok(())
     } else {
@@ -121,5 +122,27 @@ mod tests {
             assert!(matches!(result, Err(LoLSanError::Reqwest(_))));
         }
         mock.assert_async().await;
+    }
+
+    const ALL_GAME_DATA_SCHEMA_STR: &str = std::include_str!("../../../../src/schema/AllGameData.json");
+    const VALID_GAME_DATA_JSON_STR: &str = std::include_str!("../../../../src/schema/ValidAllGameData1.json");
+    const INVALID_GAME_DATA_JSON_STR: &str = std::include_str!("../../../../src/schema/InvalidAllGameData1.json");
+    #[tokio::test]
+    async fn test_validate(){
+        let schema = serde_json::from_str::<serde_json::Value>(ALL_GAME_DATA_SCHEMA_STR).unwrap();
+        println!("Schema loaded: {}", schema);
+
+        let valid_body = serde_json::from_str::<serde_json::Value>(VALID_GAME_DATA_JSON_STR).unwrap();
+        let result = validate(&schema, &valid_body).await;
+        println!("Result: {:?}", result);
+        assert!(result.is_ok());
+
+        let invalid_body = serde_json::from_str::<serde_json::Value>(INVALID_GAME_DATA_JSON_STR).unwrap();
+        let result = validate(&schema, &invalid_body).await;
+        println!("Result: {:?}", result);
+        assert!(result.is_err());
+        //let body = serde_json::json!({"userId": 1});
+        //let result = validate(&schema, &body);
+        //assert!(matches!(result, Err(ValidationError::JSONSchema(_))));
     }
 }
