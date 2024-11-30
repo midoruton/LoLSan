@@ -4,7 +4,8 @@ mod app;
 mod types;
 mod util;
 use app::{cmd::{set_obsidian_vault_path, start_get_liveclient_data_loop}, state::AppState};
-use tauri::Manager;
+use app::event::liveclient_data_event;
+use tauri::{Listener, Manager};
 use tauri_plugin_log::{self, Target, TargetKind};
 fn main() -> anyhow::Result<()> {
     tauri::Builder::default()
@@ -21,11 +22,17 @@ fn main() -> anyhow::Result<()> {
         )
         .plugin(tauri_plugin_store::Builder::default().build())
         .setup(|app| {
+            // Initialize store
             let config_path = util::path::get_config_file_path(app.handle())?;
             let _ = tauri_plugin_store::StoreBuilder::new(app, config_path).build()?;
             log::info!("store initialized");
+            // Initialize state
             let my_state_arc = AppState::default();
             app.manage(my_state_arc);
+            log::info!("state initialized");
+            // Subscribe to events
+            app.listen("liveclient_data_event", liveclient_data_event);
+            log::info!("events subscribed");
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![

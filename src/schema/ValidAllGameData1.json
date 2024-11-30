@@ -1,0 +1,302 @@
+{
+    "activePlayer": {
+        "abilities": {
+            "E": {
+                "abilityLevel": 0,
+                "displayName": "すくい投げ",
+                "id": "Fling",
+                "rawDescription": "GeneratedTip_Spell_Fling_Description",
+                "rawDisplayName": "GeneratedTip_Spell_Fling_DisplayName"
+            },
+            "Passive": {
+                "displayName": "スリップストリーム",
+                "id": "SingedP",
+                "rawDescription": "GeneratedTip_Passive_SingedP_Description",
+                "rawDisplayName": "GeneratedTip_Passive_SingedP_DisplayName"
+            },
+            "Q": {
+                "abilityLevel": 0,
+                "displayName": "毒の軌跡",
+                "id": "PoisonTrail",
+                "rawDescription": "GeneratedTip_Spell_PoisonTrail_Description",
+                "rawDisplayName": "GeneratedTip_Spell_PoisonTrail_DisplayName"
+            },
+            "R": {
+                "abilityLevel": 0,
+                "displayName": "狂人のポーション",
+                "id": "InsanityPotion",
+                "rawDescription": "GeneratedTip_Spell_InsanityPotion_Description",
+                "rawDisplayName": "GeneratedTip_Spell_InsanityPotion_DisplayName"
+            },
+            "W": {
+                "abilityLevel": 0,
+                "displayName": "強力粘着剤",
+                "id": "MegaAdhesive",
+                "rawDescription": "GeneratedTip_Spell_MegaAdhesive_Description",
+                "rawDisplayName": "GeneratedTip_Spell_MegaAdhesive_DisplayName"
+            }
+        },
+        "championStats": {
+            "abilityHaste": 0,
+            "abilityPower": 9,
+            "armor": 34,
+            "armorPenetrationFlat": 0,
+            "armorPenetrationPercent": 1,
+            "attackDamage": 63,
+            "attackRange": 125,
+            "attackSpeed": 0.625,
+            "bonusArmorPenetrationPercent": 1,
+            "bonusMagicPenetrationPercent": 1,
+            "critChance": 0,
+            "critDamage": 175,
+            "currentHealth": 660,
+            "healShieldPower": 0,
+            "healthRegenRate": 1.899999976158142,
+            "lifeSteal": 0,
+            "magicLethality": 0,
+            "magicPenetrationFlat": 0,
+            "magicPenetrationPercent": 1,
+            "magicResist": 32,
+            "maxHealth": 660,
+            "moveSpeed": 651.2717895507812,
+            "omnivamp": 0,
+            "physicalLethality": 0,
+            "physicalVamp": 0,
+            "resourceMax": 330,
+            "resourceRegenRate": 1.5,
+            "resourceType": "MANA",
+            "resourceValue": 330,
+            "spellVamp": 0,
+            "tenacity": 5
+        },
+        "currentGold": 4600.55419921875,
+        "fullRunes": {
+            "generalRunes": [
+                {
+                    "displayName": "不死者の握撃",
+                    "id": 8437,
+                    "rawDescription": "perk_tooltip_GraspOfTheUndying",
+                    "rawDisplayName": "perk_displayname_GraspOfTheUndying"
+                },
+                {
+                    "displayName": "打ちこわし",
+                    "id": 8446,
+                    "rawDescription": "perk_tooltip_8446",
+                    "rawDisplayName": "perk_displayname_8446"
+                },
+                {
+                    "displayName": "息継ぎ",
+                    "id": 8444,
+                    "rawDescription": "perk_tooltip_SecondWind",
+                    "rawDisplayName": "perk_displayname_SecondWind"
+                },
+                {
+                    "displayName": "超成長",
+                    "id": 8451,
+                    "rawDescription": "perk_tooltip_Overgrowth",
+                    "rawDisplayName": "perk_displayname_Overgrowth"
+                },
+                {
+                    "displayName": "追い風",
+                    "id": 8234,
+                    "rawDescription": "perk_tooltip_Celerity",
+                    "rawDisplayName": "perk_displayname_Celerity"
+                },
+                {
+                    "displayName": "追火",
+                    "id": 8237,
+                    "rawDescription": "perk_tooltip_Scorch",
+                    "rawDisplayName": "perk_displayname_Scorch"
+                }
+            ],
+            "keystone": {
+                "displayName": "不死者の握撃",
+                "id": 8437,
+                "rawDescription": "perk_tooltip_GraspOfTheUndying",
+                "rawDisplayName": "perk_displayname_GraspOfTheUndying"
+            },
+            "primaryRuneTree": {
+                "displayName": "不滅",
+                "id": 8400,
+                "rawDescription": "perkstyle_tooltip_7204",
+                "rawDisplayName": "perkstyle_displayname_7204"
+            },
+            "secondaryRuneTree": {
+                "displayName": "魔道",
+                "id": 8200,
+                "rawDescription": "perkstyle_tooltip_7202",
+                "rawDisplayName": "perkstyle_displayname_7202"
+            },
+            "statRunes": [
+                {
+                    "id": 5008,
+                    "rawDescription": "perk_tooltip_StatModAdaptive"
+                },
+                {
+                    "id": 5010,
+                    "rawDescription": "perk_tooltip_StatModMovementSpeed"
+                },
+                {
+                    "id": 5001,
+                    "rawDescription": "perk_tooltip_StatModHealthScaling"
+                }
+            ]
+        },
+        "level": 1,
+        "riotId": "みどるくん#JP1",
+        "riotIdGameName": "みどるくん",
+        "riotIdTagLine": "JP1",
+        "summonerName": "みどるくん#JP1",
+        "teamRelativeColors": true
+    },
+    "allPlayers": [
+        {
+            "championName": "シンジド",
+            "isBot": false,
+            "isDead": false,
+            "items": [],
+            "level": 1,
+            "position": "",
+            "rawChampionName": "game_character_displayname_Singed",
+            "rawSkinName": "game_character_skin_displayname_Singed_28",
+            "respawnTimer": 0,
+            "riotId": "みどるくん#JP1",
+            "riotIdGameName": "みどるくん",
+            "riotIdTagLine": "JP1",
+            "runes": {
+                "keystone": {
+                    "displayName": "不死者の握撃",
+                    "id": 8437,
+                    "rawDescription": "perk_tooltip_GraspOfTheUndying",
+                    "rawDisplayName": "perk_displayname_GraspOfTheUndying"
+                },
+                "primaryRuneTree": {
+                    "displayName": "不滅",
+                    "id": 8400,
+                    "rawDescription": "perkstyle_tooltip_7204",
+                    "rawDisplayName": "perkstyle_displayname_7204"
+                },
+                "secondaryRuneTree": {
+                    "displayName": "魔道",
+                    "id": 8200,
+                    "rawDescription": "perkstyle_tooltip_7202",
+                    "rawDisplayName": "perkstyle_displayname_7202"
+                }
+            },
+            "scores": {
+                "assists": 0,
+                "creepScore": 0,
+                "deaths": 0,
+                "kills": 0,
+                "wardScore": 0
+            },
+            "skinID": 28,
+            "skinName": "Arcane シマーラボ シンジド",
+            "summonerName": "みどるくん#JP1",
+            "summonerSpells": {
+                "summonerSpellOne": {
+                    "displayName": "真テレポート",
+                    "rawDescription": "GeneratedTip_SummonerSpell_S12_SummonerTeleportUpgrade_Description",
+                    "rawDisplayName": "GeneratedTip_SummonerSpell_S12_SummonerTeleportUpgrade_DisplayName"
+                },
+                "summonerSpellTwo": {
+                    "displayName": "フラッシュ",
+                    "rawDescription": "GeneratedTip_SummonerSpell_SummonerFlash_Description",
+                    "rawDisplayName": "GeneratedTip_SummonerSpell_SummonerFlash_DisplayName"
+                }
+            },
+            "team": "ORDER"
+        }
+    ],
+    "events": {
+        "Events": [
+            {
+                "EventID": 0,
+                "EventName": "GameStart",
+                "EventTime": 0.00771640008315444
+            },
+            {
+                "EventID": 1,
+                "EventName": "MinionsSpawning",
+                "EventTime": 65.02315521240234
+            },
+            {
+                "Assisters": [],
+                "EventID": 2,
+                "EventName": "TurretKilled",
+                "EventTime": 1175.3607177734375,
+                "KillerName": "Minion_T200L0S36N0227",
+                "TurretKilled": "Turret_T1_R_03_A"
+            },
+            {
+                "EventID": 3,
+                "EventName": "FirstBrick",
+                "EventTime": 1175.3607177734375,
+                "KillerName": "Minion_T200L0S36N0227"
+            },
+            {
+                "Assisters": [],
+                "EventID": 4,
+                "EventName": "TurretKilled",
+                "EventTime": 1455.0233154296875,
+                "KillerName": "Minion_T100L1S45N0286",
+                "TurretKilled": "Turret_T2_C_05_A"
+            },
+            {
+                "Assisters": [],
+                "EventID": 5,
+                "EventName": "TurretKilled",
+                "EventTime": 1464.9453125,
+                "KillerName": "Minion_T100L2S45N0287",
+                "TurretKilled": "Turret_T2_L_03_A"
+            },
+            {
+                "Assisters": [],
+                "EventID": 6,
+                "EventName": "TurretKilled",
+                "EventTime": 1619.8795166015625,
+                "KillerName": "Minion_T100L0S51N0325",
+                "TurretKilled": "Turret_T2_R_03_A"
+            },
+            {
+                "Assisters": [],
+                "EventID": 7,
+                "EventName": "TurretKilled",
+                "EventTime": 1735.974609375,
+                "KillerName": "Minion_T200L1S54N0346",
+                "TurretKilled": "Turret_T1_C_05_A"
+            },
+            {
+                "Assisters": [],
+                "EventID": 8,
+                "EventName": "TurretKilled",
+                "EventTime": 1861.058349609375,
+                "KillerName": "Minion_T100L0S56N0361",
+                "TurretKilled": "Turret_T2_R_02_A"
+            },
+            {
+                "Assisters": [],
+                "EventID": 9,
+                "EventName": "TurretKilled",
+                "EventTime": 1999.06689453125,
+                "KillerName": "Minion_T100L1S64N0416",
+                "TurretKilled": "Turret_T2_C_04_A"
+            },
+            {
+                "Assisters": [],
+                "EventID": 10,
+                "EventName": "TurretKilled",
+                "EventTime": 2008.3494873046875,
+                "KillerName": "Minion_T200L2S64N0416",
+                "TurretKilled": "Turret_T1_L_03_A"
+            }
+        ]
+    },
+    "gameData": {
+        "gameMode": "PRACTICETOOL",
+        "gameTime": 2021.6251220703125,
+        "mapName": "Map11",
+        "mapNumber": 11,
+        "mapTerrain": "Default"
+    }
+}
