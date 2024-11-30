@@ -35,6 +35,7 @@ fn main() -> anyhow::Result<()> {
             // Subscribe to events
             let handle = app.handle().clone();
             app.listen("liveclient_data_event", move |event| liveclient_data_event(&handle, event));
+
             log::info!("events subscribed");
             Ok(())
         })
