@@ -3,6 +3,8 @@
 mod app;
 mod types;
 mod util;
+use std::ops::Deref;
+
 use app::{cmd::{set_obsidian_vault_path, start_get_liveclient_data_loop}, state::AppState};
 use app::event::liveclient_data_event;
 use tauri::{Listener, Manager};
@@ -31,7 +33,8 @@ fn main() -> anyhow::Result<()> {
             app.manage(my_state_arc);
             log::info!("state initialized");
             // Subscribe to events
-            app.listen("liveclient_data_event", liveclient_data_event);
+            let handle = app.handle().clone();
+            app.listen("liveclient_data_event", move |event| liveclient_data_event(&handle, event));
             log::info!("events subscribed");
             Ok(())
         })
