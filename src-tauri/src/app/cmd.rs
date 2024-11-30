@@ -17,7 +17,7 @@ pub fn set_obsidian_vault_path<R: Runtime>(
 where
     Result<(), LoLSanError>: Serialize,
 {
-    let config_path = super::super::util::path::get_config_file_path(&app)?;
+    let config_path = crate::util::path::get_config_file_path(&app)?;
     let store = app.store(config_path)?;
     store.set("vault_path", vault_path);
     store.save()?;
