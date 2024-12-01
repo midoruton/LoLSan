@@ -2291,6 +2291,7 @@ dependencies = [
  "log",
  "mockito",
  "open",
+ "percent-encoding",
  "reqwest",
  "serde",
  "serde_json",

@@ -28,6 +28,7 @@ mockito = "1.6.1"
 tokio = "1.41.1"
 derive_more = { version = "1.0.0", features = ["full"] }
 futures = "0.3.31"
+percent-encoding = "2.3.1"
 
 [features]
 # This feature is used for production builds or when a dev server is not specified, DO NOT REMOVE!!
