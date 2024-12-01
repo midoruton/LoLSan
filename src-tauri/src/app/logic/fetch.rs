@@ -35,7 +35,7 @@ impl From<jsonschema::ErrorIterator<'_>> for ValidationError {
     }
 }
 
-pub async fn validate(schema: &Value, body: &Value) -> Result<(), ValidationError> {
+pub fn validate(schema: &Value, body: &Value) -> Result<(), ValidationError> {
     let validator = jsonschema::draft7::options()
         .build(schema)?;
     if validator.is_valid(body) {
@@ -56,9 +56,9 @@ mod tests {
         danger_accept_invalid_cert: bool,
         schema: &Value,
     ) -> Result<Value, LoLSanError> {
-        let responce = fetch(url, danger_accept_invalid_cert).await?;
-        validate(schema, &responce).await?;
-        Ok(responce)
+        let response = fetch(url, danger_accept_invalid_cert).await?;
+        validate(schema, &response)?;
+        Ok(response)
     }
     use super::*;
     #[tokio::test]
@@ -133,12 +133,12 @@ mod tests {
         println!("Schema loaded: {}", schema);
 
         let valid_body = serde_json::from_str::<serde_json::Value>(VALID_GAME_DATA_JSON_STR).unwrap();
-        let result = validate(&schema, &valid_body).await;
+        let result = validate(&schema, &valid_body);
         println!("Result: {:?}", result);
         assert!(result.is_ok());
 
         let invalid_body = serde_json::from_str::<serde_json::Value>(INVALID_GAME_DATA_JSON_STR).unwrap();
-        let result = validate(&schema, &invalid_body).await;
+        let result = validate(&schema, &invalid_body);
         println!("Result: {:?}", result);
         assert!(result.is_err());
         //let body = serde_json::json!({"userId": 1});

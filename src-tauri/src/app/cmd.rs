@@ -58,7 +58,7 @@ where
                     };
                     log::debug!("Data fetched: {}", responce);
                     log::debug!("Validating data with schema: {}", schema);
-                    let valid_responce = match validate(&schema, &responce).await {
+                    let valid_responce = match validate(&schema, &responce) {
                         Ok(_) => responce,
                         Err(e) => {
                             log::warn!("Error while validating data: {}", e);
