@@ -3,7 +3,6 @@
 mod app;
 mod types;
 mod util;
-use std::ops::Deref;
 
 use app::{cmd::{set_obsidian_vault_path, start_get_liveclient_data_loop}, state::AppState};
 use app::event::liveclient_data_event;
@@ -20,6 +19,7 @@ fn main() -> anyhow::Result<()> {
                         file_name: Some("logs".to_string()),
                     }),
                 ])
+                .level(log::LevelFilter::Debug)
                 .build(),
         )
         .plugin(tauri_plugin_store::Builder::default().build())
@@ -34,8 +34,12 @@ fn main() -> anyhow::Result<()> {
             log::info!("state initialized");
             // Subscribe to events
             let handle = app.handle().clone();
-            app.listen("liveclient_data_event", move |event| liveclient_data_event(&handle, event));
-
+            app.listen(
+                "liveclient_data_event",
+                 move|_|{
+                    liveclient_data_event(&handle);
+                });
+            
             log::info!("events subscribed");
             Ok(())
         })
@@ -45,5 +49,6 @@ fn main() -> anyhow::Result<()> {
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
+    
     Ok(())
 }
